@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Sunshine</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="refresh">Refresh</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_settings">Settings</string>
+    <string name="setting_title_location">Location</string>
+    <string name="location_key">location_key</string>
+    <string name="location_summary">Enter a city ID</string>
+    <string name="tempture_mode">Tempture Mode</string>
+    <string name="title_dialog">Select a tempture mode</string>
+    <string name="tempture_mode_default">metric</string>
+    <string name="temp_list">tempture_list</string>
+    <string name="prefered_location">Prefered Location</string>
+    <string name="share">Share</string>
+
+</resources>
