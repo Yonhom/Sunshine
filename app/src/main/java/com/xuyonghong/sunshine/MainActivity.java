@@ -4,15 +4,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;import com.example.android.sunshine.app.R;
+import android.widget.Toast;
+
+import com.example.android.sunshine.app.R;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
-    private static final String DEBUG_TAG = "MainActivity";
+    private static final String DEBUG_TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,41 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new ForecastFragment())
                     .commit();
         }
+        Log.d(DEBUG_TAG, "-------------onCreate called-----------------");
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(DEBUG_TAG, "-------------onStart called-----------------");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(DEBUG_TAG, "-------------onPause called-----------------");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(DEBUG_TAG, "-------------onResume called-----------------");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(DEBUG_TAG, "-------------onStop called-----------------");
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(DEBUG_TAG, "-------------onDestory called-----------------");
+
     }
 
     @Override
