@@ -166,6 +166,7 @@ public class TestDb extends AndroidTestCase {
         // Finally, close the cursor and database
         cursor.close();
         database.close();
+
     }
 
 
