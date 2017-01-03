@@ -34,6 +34,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.xuyonghong.sunshine.DetailActivity" />
         </activity>
+
+        <!--register the self-defined weather content provider-->
+        <provider
+            android:authorities="com.xuyonghong.sunshine.app"
+            android:name="com.xuyonghong.sunshine.data.WeatherProvider" />
+
     </application>
+
+
 
 </manifest>
