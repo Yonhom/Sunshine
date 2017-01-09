@@ -57,6 +57,7 @@ public class TestDb extends AndroidTestCase {
         tableNameHashSet.add(WeatherContract.WeatherEntry.TABLE_NAME);
 
         mContext.deleteDatabase(WeatherDbHelper.DATABASE_NAME);
+
         SQLiteDatabase db = new WeatherDbHelper(
                 this.mContext).getWritableDatabase();
         assertEquals(true, db.isOpen());
@@ -131,8 +132,7 @@ public class TestDb extends AndroidTestCase {
         // we can move this code to insertLocation and then call insertLocation from both
         // tests. Why move it? We need the code to return the ID of the inserted location
         // and our testLocationTable can only return void because it's a test.
-
-        long locationRowId = insertLocation();
+        long locationRowId = insertLocation(); // cause the weather table uses the location table's _ID ad its foreign key, so the location table has to be created first
 
         //Make sure we have a valid row ID
         assertFalse("Error: Location Not Inserted Correctly", locationRowId == -1);

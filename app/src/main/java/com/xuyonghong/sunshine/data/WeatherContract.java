@@ -79,6 +79,7 @@ public class WeatherContract {
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LOCATION;
 
         public static Uri buildLocationUri(long id) {
+            // content://com.xuyonghong.sunshine.app/location/id
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
@@ -116,26 +117,33 @@ public class WeatherContract {
         // Degrees are meteorological degrees (e.g, 0 is north, 180 is south).  Stored as floats.
         public static final String COLUMN_DEGREES = "degrees";
 
+        // content://com.xuyonghong.sunshine.app/weather
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_WEATHER).build();
 
+        // vnd.android.cursor.dir/com.xuyonghong.sunshine.app/weather
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WEATHER;
+
+        // vnd.android.cursor.item/com.xuyonghong.sunshine.app/weather
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WEATHER;
 
-
+        // content://com.xuyonghong.sunshine.app/weather/id
         public static Uri buildWeatherUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
         /*
-            Student: Fill in this buildWeatherLocation function
+            content://com.xuyonghong.sunshine.app/weather/locationSetting
+            return a uri for the weather data for a specific location
          */
         public static Uri buildWeatherLocation(String locationSetting) {
             return CONTENT_URI.buildUpon().appendPath(locationSetting).build();
         }
 
+        // content://com.xuyonghong.sunshine.app/weather/locationSetting?date=startDate
+        // return a uri for weather data for a specific location and start date
         public static Uri buildWeatherLocationWithStartDate(
                 String locationSetting, long startDate) {
             long normalizedDate = normalizeDate(startDate);
@@ -143,6 +151,7 @@ public class WeatherContract {
                     .appendQueryParameter(COLUMN_DATE, Long.toString(normalizedDate)).build();
         }
 
+        // content://com.xuyonghong.sunshine.app/weather/locationSetting/date
         public static Uri buildWeatherLocationWithDate(String locationSetting, long date) {
             return CONTENT_URI.buildUpon().appendPath(locationSetting)
                     .appendPath(Long.toString(normalizeDate(date))).build();

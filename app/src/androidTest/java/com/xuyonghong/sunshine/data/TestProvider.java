@@ -386,7 +386,7 @@ public class TestProvider extends AndroidTestCase {
         // Get the joined Weather and Location data with a start date
         weatherCursor = mContext.getContentResolver().query(
                 WeatherEntry.buildWeatherLocationWithStartDate(
-                        TestUtilities.TEST_LOCATION, TestUtilities.TEST_DATE),
+                        TestUtilities.TEST_LOCATION, TestUtilities.TEST_DATE), //content://com.xuyonghong.sunshine.app/weather/99705?date=1353600000
                 null, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
                 null, // values for "where" clause
@@ -397,7 +397,7 @@ public class TestProvider extends AndroidTestCase {
 
         // Get the joined Weather data for a specific date
         weatherCursor = mContext.getContentResolver().query(
-                WeatherEntry.buildWeatherLocationWithDate(TestUtilities.TEST_LOCATION, TestUtilities.TEST_DATE),
+                WeatherEntry.buildWeatherLocationWithDate(TestUtilities.TEST_LOCATION, TestUtilities.TEST_DATE),  // content://com.xuyonghong.sunshine.app/weather/99705/1353600000
                 null,
                 null,
                 null,

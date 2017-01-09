@@ -17,7 +17,10 @@ package com.xuyonghong.sunshine;
 
 import com.xuyonghong.sunshine.data.TestDb;
 import com.xuyonghong.sunshine.data.TestPractice;
+import com.xuyonghong.sunshine.data.TestProvider;
+import com.xuyonghong.sunshine.data.TestUriMatcher;
 import com.xuyonghong.sunshine.data.TestUtilities;
+import com.xuyonghong.sunshine.data.TestWeatherContract;
 
 import junit.framework.TestSuite;
 
@@ -27,7 +30,9 @@ import org.junit.runners.Suite;
 //JUnit Suite Test
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        TestDb.class, TestPractice.class, TestUtilities.class
+        TestDb.class, TestPractice.class, TestUtilities.class,
+        TestProvider.class, TestUriMatcher.class, TestWeatherContract.class,
+        TestFetchWeatherTask.class
 })
 
 public class FullTestSuite extends TestSuite {

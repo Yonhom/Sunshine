@@ -11,11 +11,24 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.android.sunshine.app.R;
+import com.xuyonghong.sunshine.fragment.ForecastFragment;
+import com.xuyonghong.sunshine.util.Utility;
 
-
+/**
+ * MainActivity到ForecastFragment主要声明周期调用顺序
+ * MainActivity.onCreate --> ForecastFragment.onCreate -->
+ * ForecastFragment.onCreateView --> ForecastFragment.onActivityCreated
+ * ForecastFragment.onStart -->
+ * MainActivity.onStart --> MainActivity.onResume
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String DEBUG_TAG = MainActivity.class.getSimpleName();
+
+    private final String FORECASTFRAGMENT_TAG = "FFTAG";
+
+    private String mLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +36,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new ForecastFragment())
+                    .add(R.id.container, new ForecastFragment(), FORECASTFRAGMENT_TAG)
                     .commit();
         }
         Log.d(DEBUG_TAG, "-------------onCreate called-----------------");
 
-
+        mLocation = Utility.getPreferredLocation(this);
     }
 
     @Override
@@ -41,12 +54,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.d(DEBUG_TAG, "-------------onPause called-----------------");
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(DEBUG_TAG, "-------------onResume called-----------------");
+        String location = Utility.getPreferredLocation(this);
+
+        if (location != null && location.endsWith(mLocation)) {
+            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager()
+                    .findFragmentByTag(FORECASTFRAGMENT_TAG);
+            if (null != ff) {
+                ff.onLocationChanged();
+            }
+        }
+        mLocation = location;
     }
 
     @Override
@@ -106,5 +130,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

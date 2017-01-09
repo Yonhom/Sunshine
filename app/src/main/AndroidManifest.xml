@@ -38,7 +38,9 @@
         <!--register the self-defined weather content provider-->
         <provider
             android:authorities="com.xuyonghong.sunshine.app"
-            android:name="com.xuyonghong.sunshine.data.WeatherProvider" />
+            android:name="com.xuyonghong.sunshine.data.WeatherProvider"
+            android:enabled="true"
+            android:exported="true"/>
 
     </application>
 
