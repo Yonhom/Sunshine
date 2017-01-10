@@ -151,7 +151,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         //get weather condition is from cursor
         int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
-        mIconView.setImageResource(R.drawable.ic_launcher);
+        int weatherIconResId = Utility.getArtResourceForWeatherCondition(weatherId);
+        mIconView.setImageResource(weatherIconResId);
 
         // read date from cursor and update view
         long date = data.getLong(COL_WEATHER_DATE);
