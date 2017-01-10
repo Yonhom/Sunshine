@@ -1,10 +1,14 @@
 package com.xuyonghong.sunshine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;import com.example.android.sunshine.app.R;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
+
+import com.example.android.sunshine.app.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.
@@ -69,4 +73,10 @@ public class SettingsActivity extends PreferenceActivity
         return true;
     }
 
+    @Nullable
+    @Override
+    public Intent getParentActivityIntent() {
+        return super.getParentActivityIntent()
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    }
 }

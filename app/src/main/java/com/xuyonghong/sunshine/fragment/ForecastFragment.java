@@ -1,6 +1,5 @@
 package com.xuyonghong.sunshine.fragment;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.sunshine.app.R;
-import com.xuyonghong.sunshine.DetailActivity;
 import com.xuyonghong.sunshine.FetchWeatherTask;
 import com.xuyonghong.sunshine.adapter.ForecastAdapter;
 import com.xuyonghong.sunshine.data.WeatherContract;
@@ -126,12 +124,10 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                 // or null if it cannot seek to that position.
                 Cursor cursor = (Cursor) listView.getItemAtPosition(position);
                 if (cursor != null) {
-                    String locationSetting = Utility.getPreferredLocation(getActivity());
-                    Intent intent = new Intent(getActivity(), DetailActivity.class)
-                            .setData(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-                                    locationSetting, cursor.getLong(COL_WEATHER_DATE)
-                            ));
-                    startActivity(intent);
+                    String locationSetting = Utility.getPreferredLocation(getContext());
+                    ((Callback)getActivity()).onItemSelected(
+                            WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+                                    locationSetting, cursor.getLong(COL_WEATHER_DATE)));
                 }
             }
         });
@@ -174,5 +170,17 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     public void onLocationChanged() {
         updateWeather();
         getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
+    }
+
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        void onItemSelected(Uri dataUri);
     }
 }

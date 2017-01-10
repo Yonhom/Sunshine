@@ -10,8 +10,8 @@
 
     <!--
     This layout is a two-pane layout for the Items master/detail flow.
+    this fragment will be loaded and shown if the avtivity_main is loaded
     -->
-
     <fragment
         android:id="@+id/fragment_forecast"
         android:name="com.xuyonghong.sunshine.fragment.ForecastFragment"
