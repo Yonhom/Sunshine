@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.sunshine.app.R;
@@ -38,12 +39,20 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     private static final int DETAIL_LOADER = 0;
 
-    private static final String[] FORECAST_COLUMNS = {
+    private static final String[] DETAIL_COLUMNS = {
             WeatherContract.WeatherEntry.TABLE_NAME + "." + WeatherContract.WeatherEntry._ID,
             WeatherContract.WeatherEntry.COLUMN_DATE,
             WeatherContract.WeatherEntry.COLUMN_SHORT_DESC,
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
+            WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
+            WeatherContract.WeatherEntry.COLUMN_PRESSURE,
+            WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
+            WeatherContract.WeatherEntry.COLUMN_DEGREES,
+            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
+            // This works because the WeatherProvider returns location data joined with
+            // weather data, even though they're stored in two different tables.
+            WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING
     };
 
     // These indices are tied to FORECAST_COLUMNS.
@@ -53,6 +62,21 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public static final int COL_WEATHER_DESC = 2;
     public static final int COL_WEATHER_MAX_TEMP = 3;
     public static final int COL_WEATHER_MIN_TEMP = 4;
+    public static final int COL_WEATHER_HUMIDITY = 5;
+    public static final int COL_WEATHER_PRESSURE = 6;
+    public static final int COL_WEATHER_WIND_SPEED = 7;
+    public static final int COL_WEATHER_DEGREES = 8;
+    public static final int COL_WEATHER_CONDITION_ID = 9;
+
+    private ImageView mIconView;
+    private TextView mFriendlyDateView;
+    private TextView mDateView;
+    private TextView mDescriptionView;
+    private TextView mHighTempView;
+    private TextView mLowTempView;
+    private TextView mHumidityView;
+    private TextView mWindView;
+    private TextView mPressureView;
 
     public DetailFragment() {
         setHasOptionsMenu(true); // for the onCreateOptionsMenu method in fragment to be called, this method has to be called first
@@ -76,7 +100,17 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        mIconView = (ImageView) rootView.findViewById(R.id.detail_icon);
+        mDateView = (TextView) rootView.findViewById(R.id.detail_date_textview);
+        mFriendlyDateView = (TextView) rootView.findViewById(R.id.detail_day_textview);
+        mDescriptionView = (TextView) rootView.findViewById(R.id.detail_forecast_textview);
+        mHighTempView = (TextView) rootView.findViewById(R.id.detail_high_textview);
+        mLowTempView = (TextView) rootView.findViewById(R.id.detail_low_textview);
+        mHumidityView = (TextView) rootView.findViewById(R.id.detail_humidity_textview);
+        mWindView = (TextView) rootView.findViewById(R.id.detail_wind_textview);
+        mPressureView = (TextView) rootView.findViewById(R.id.detail_pressure_textview);
+        return rootView;
 
     }
 
@@ -101,9 +135,10 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         if (intent == null) {
             return null;
          }
-        return new CursorLoader(getContext(),
+        return new CursorLoader(
+                getContext(),
                 intent.getData(),
-                FORECAST_COLUMNS,
+                DETAIL_COLUMNS,
                 null,
                 null,
                 null);
@@ -114,24 +149,39 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Log.v(LOG_TAG, "In onLoadFinished");
         if (!data.moveToFirst()) { return; }
 
-        String dateString = Utility.formatDate(
-                data.getLong(COL_WEATHER_DATE));
+        //get weather condition is from cursor
+        int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
+        mIconView.setImageResource(R.drawable.ic_launcher);
+
+        // read date from cursor and update view
+        long date = data.getLong(COL_WEATHER_DATE);
+        String friendlyDateText = Utility.getDayName(getContext(), date);
+        String dateText = Utility.getFormattedMonthDay(getContext(), date);
+        mFriendlyDateView.setText(friendlyDateText);
+        mDateView.setText(dateText);
 
         String weatherDescription =
                 data.getString(COL_WEATHER_DESC);
+        mDescriptionView.setText(weatherDescription);
 
         boolean isMetric = Utility.isMetric(getActivity());
 
         String high = Utility.formatTemperature(
                 data.getDouble(COL_WEATHER_MAX_TEMP), isMetric);
+        mHighTempView.setText(high);
 
         String low = Utility.formatTemperature(
                 data.getDouble(COL_WEATHER_MIN_TEMP), isMetric);
+        mLowTempView.setText(low);
 
-        mForecast = String.format("%s - %s - %s/%s", dateString, weatherDescription, high, low);
+        float humidity = data.getFloat(COL_WEATHER_HUMIDITY);
+        mHumidityView.setText(
+                getActivity().getString(R.string.format_humidity, humidity));
 
-        TextView detailTextView = (TextView)getView().findViewById(R.id.weather_detail);
-        detailTextView.setText(mForecast);
+        float pressure = data.getFloat(COL_WEATHER_PRESSURE);
+        mPressureView.setText(getActivity().getString(R.string.format_pressure, pressure));
+
+        mForecast = String.format("%s - %s - %s/%s", dateText, weatherDescription, high, low);
 
         // If onCreateOptionsMenu has already happened, we need to update the share intent now.
         if (mShareActionProvider != null) {
