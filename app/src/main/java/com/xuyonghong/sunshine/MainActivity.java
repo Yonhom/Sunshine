@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.android.sunshine.app.R;
 import com.xuyonghong.sunshine.fragment.DetailFragment;
 import com.xuyonghong.sunshine.fragment.ForecastFragment;
 import com.xuyonghong.sunshine.util.Utility;
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             }
         } else {
             mTwoPane = false;
+            getSupportActionBar().setElevation(0); // remove the shadow under action bar on phone
         }
 
         Log.d(DEBUG_TAG, "-------------onCreate called-----------------");

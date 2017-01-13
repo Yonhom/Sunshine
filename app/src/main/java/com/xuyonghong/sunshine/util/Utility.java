@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
 
-import com.example.android.sunshine.app.R;
+import com.xuyonghong.sunshine.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

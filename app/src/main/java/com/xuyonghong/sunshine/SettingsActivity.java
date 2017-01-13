@@ -8,7 +8,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
-import com.example.android.sunshine.app.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.

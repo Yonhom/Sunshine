@@ -8,8 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.android.sunshine.app.R;
+import com.xuyonghong.sunshine.R;
 import com.xuyonghong.sunshine.fragment.ForecastFragment;
 import com.xuyonghong.sunshine.util.Utility;
 

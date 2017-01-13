@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.android.sunshine.app.R;
 import com.xuyonghong.sunshine.fragment.DetailFragment;
 
 public class DetailActivity extends AppCompatActivity {
@@ -28,6 +27,7 @@ public class DetailActivity extends AppCompatActivity {
                     .add(R.id.weather_detail_container, dFragment) // the
                     .commit();
         }
+        getSupportActionBar().setElevation(0);
 
     }
 
