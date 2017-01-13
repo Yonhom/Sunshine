@@ -132,14 +132,14 @@ public class Utility {
         return monthDayString;
     }
 
-    public static String formatTemperature(Context context, double temperature, boolean isMetric) {
-        double temp;
-        if ( !isMetric ) {
-            temp = 9*temperature/5+32;
-        } else {
-            temp = temperature;
+    public static String formatTemperature(Context context, double temperature) {
+        // Data stored in Celsius by default. If the user want to
+        // see in Fahrenheit, convert the value here
+        String suffix = "\u00B0";
+        if ( !isMetric(context) ) {
+            temperature = (temperature * 1.8) + 32;
         }
-        return context.getString(R.string.format_temperature, temp);
+        return String.format(context.getString(R.string.format_temperature), temperature);
     }
 
     public static String getFormattedWind(Context context, float windSpeed, float degrees) {

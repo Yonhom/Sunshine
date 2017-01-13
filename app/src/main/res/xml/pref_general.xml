@@ -15,4 +15,12 @@
         android:entryValues="@array/pref_temp_mode_values"
         android:defaultValue="@string/tempture_mode_default"/>
 
+    <CheckBoxPreference
+        android:title="@string/pref_enable_notifications_label"
+        android:key="@string/pref_enable_notifications_key"
+        android:summaryOff="@string/pref_enable_notifications_false"
+        android:summaryOn="@string/pref_enable_notifications_true"
+        android:defaultValue="@string/pref_enable_notifications_default"
+        />
+
 </PreferenceScreen>
