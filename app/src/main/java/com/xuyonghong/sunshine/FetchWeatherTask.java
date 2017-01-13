@@ -39,6 +39,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Vector;
 
+/**
+ * we dont use this class in the project anymore, use intent service instead
+ */
 public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
     private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
