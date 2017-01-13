@@ -1,9 +1,5 @@
 package com.xuyonghong.sunshine.fragment;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,7 +21,7 @@ import android.widget.ListView;
 import com.xuyonghong.sunshine.R;
 import com.xuyonghong.sunshine.adapter.ForecastAdapter;
 import com.xuyonghong.sunshine.data.WeatherContract;
-import com.xuyonghong.sunshine.service.SunshineService;
+import com.xuyonghong.sunshine.sync.SunshineSyncAdapter;
 import com.xuyonghong.sunshine.util.Utility;
 
 /**
@@ -104,22 +100,19 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
      */
     private void updateWeather() {
 
-        Intent alarmIntent = new Intent(getActivity(), SunshineService.AlarmReceiver.class);
-        alarmIntent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,
-                Utility.getPreferredLocation(getContext()));
-
-        PendingIntent pi = PendingIntent.getBroadcast(
-                getContext(), 0, alarmIntent, PendingIntent.FLAG_ONE_SHOT);
-
-        AlarmManager am = (AlarmManager) getActivity().getSystemService(Service.ALARM_SERVICE);
-        // schedule a alarm, this alarm is a intent broadcast that goes to a receiver registered
-        // in the manifest, so the onRecieve method of the registered receiver will be called
-        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pi);
-
-//        Intent intent = new Intent(getActivity(), SunshineService.class);
-//        intent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,
+//        Intent alarmIntent = new Intent(getActivity(), SunshineService.AlarmReceiver.class);
+//        alarmIntent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,
 //                Utility.getPreferredLocation(getContext()));
-//        getActivity().startService(intent);
+//
+//        PendingIntent pi = PendingIntent.getBroadcast(
+//                getContext(), 0, alarmIntent, PendingIntent.FLAG_ONE_SHOT);
+//
+//        AlarmManager am = (AlarmManager) getActivity().getSystemService(Service.ALARM_SERVICE);
+//        // schedule a alarm, this alarm is a intent broadcast that goes to a receiver registered
+//        // in the manifest, so the onRecieve method of the registered receiver will be called
+//        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pi);
+        // when is method is called, onSyncPerformed of SunshineSyncAdapter is called
+        SunshineSyncAdapter.syncImmediately(getActivity());
 
     }
 
