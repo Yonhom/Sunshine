@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.xuyonghong.sunshine.fragment.DetailFragment;
 import com.xuyonghong.sunshine.fragment.ForecastFragment;
+import com.xuyonghong.sunshine.sync.SunshineSyncAdapter;
 import com.xuyonghong.sunshine.util.Utility;
 
 /**
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             mTwoPane = false;
             getSupportActionBar().setElevation(0); // remove the shadow under action bar on phone
         }
+
+        // initialize the SyncAdapter
+        SunshineSyncAdapter.initializeSyncAdapter(this);
 
         Log.d(DEBUG_TAG, "-------------onCreate called-----------------");
 
