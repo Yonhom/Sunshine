@@ -75,5 +75,6 @@
     <string name="pref_enable_notifications_default" translatable="false">true</string>
 
     <string name="empty_forecast_list">No Weather Information Available</string>
+    <string name="empty_forecast_no_network">No Weather Information Available Due To No Internet Connection</string>
 
 </resources>

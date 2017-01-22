@@ -1,7 +1,10 @@
 package com.xuyonghong.sunshine.util;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
 
@@ -242,5 +245,17 @@ public class Utility {
             return R.drawable.art_clouds;
         }
         return -1;
+    }
+
+    /**
+     * get the internet connectivity status
+     * @param context
+     * @return
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context
+                .getSystemService(Service.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 }

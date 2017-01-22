@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.xuyonghong.sunshine.R;
 import com.xuyonghong.sunshine.adapter.ForecastAdapter;
@@ -176,6 +177,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         adapter.swapCursor(data);
+        updateEmptyView();
     }
 
     @Override
@@ -198,5 +200,18 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
          * DetailFragmentCallback for when an item has been selected.
          */
         void onItemSelected(Uri dataUri);
+    }
+
+    private void updateEmptyView() {
+        if (adapter.getCount() == 0) {
+            TextView ev = (TextView) getView().findViewById(R.id.forecast_empty_view);
+            if (null != ev) {
+                int message = R.string.empty_forecast_list;
+                if (!Utility.isNetworkAvailable(getActivity())) {
+                    message = R.string.empty_forecast_no_network;
+                }
+                ev.setText(message);
+            }
+        }
     }
 }
