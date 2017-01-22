@@ -127,6 +127,11 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
         final ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(adapter);
+        View emptyView = rootView.findViewById(R.id.forecast_empty_view);
+        // if the adapter is empty, show this view
+        // when the app is back online, weather data is returned, and view will be refreshed,
+        // thanks to AsyncAdapter
+        listView.setEmptyView(emptyView);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
