@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
 
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         if (findViewById(R.id.weather_detail_container) != null) { // the app is in two-panel mode
             // The detail container view will be present only in the large-screen layouts
             // (res/layout-sw600dp). If this view is present, then the activity should be
@@ -54,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             }
         } else {
             mTwoPane = false;
-            getSupportActionBar().setElevation(0); // remove the shadow under action bar on phone
+//            getSupportActionBar().setElevation(0); // remove the shadow under action bar on phone
         }
 
         // initialize the SyncAdapter
